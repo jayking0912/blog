@@ -1,0 +1,756 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="django," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Django 大包大揽，用它来快速开发一些 Web 应用是不错的。如果你顺着 Django 的设计哲学来，你会觉得 Django 很好用，越用越顺手；相反，你如果不能融入或接受 Django 的设计哲学，你用 Django 一定会很痛苦，趁早放弃的好。所以说在有些人眼里 Django 无异于仙丹， 但对有一些人来说它又">
+<meta name="keywords" content="django">
+<meta property="og:type" content="article">
+<meta property="og:title" content="django优缺点">
+<meta property="og:url" content="http://5201314baby.com/2017/04/02/djangofeature/index.html">
+<meta property="og:site_name" content="jayking&#39;s blog">
+<meta property="og:description" content="Django 大包大揽，用它来快速开发一些 Web 应用是不错的。如果你顺着 Django 的设计哲学来，你会觉得 Django 很好用，越用越顺手；相反，你如果不能融入或接受 Django 的设计哲学，你用 Django 一定会很痛苦，趁早放弃的好。所以说在有些人眼里 Django 无异于仙丹， 但对有一些人来说它又是毒药且剧毒。 先说缺点：  系统紧耦合，如果你觉得 Django 内置的某项功">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-12-01T07:06:45.136Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="django优缺点">
+<meta name="twitter:description" content="Django 大包大揽，用它来快速开发一些 Web 应用是不错的。如果你顺着 Django 的设计哲学来，你会觉得 Django 很好用，越用越顺手；相反，你如果不能融入或接受 Django 的设计哲学，你用 Django 一定会很痛苦，趁早放弃的好。所以说在有些人眼里 Django 无异于仙丹， 但对有一些人来说它又是毒药且剧毒。 先说缺点：  系统紧耦合，如果你觉得 Django 内置的某项功">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://5201314baby.com/2017/04/02/djangofeature/"/>
+
+
+
+
+
+  <title> django优缺点 | jayking's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">jayking's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Let's crazy</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://5201314baby.com/2017/04/02/djangofeature/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jayking">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jayking's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                django优缺点
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-02T14:15:32+08:00">
+                2017-04-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web后端/" itemprop="url" rel="index">
+                    <span itemprop="name">web后端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/04/02/djangofeature/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/02/djangofeature/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Django 大包大揽，用它来快速开发一些 Web 应用是不错的。如果你顺着 <a href="http://www.nowamagic.net/academy/tag/Django" target="_blank" rel="noopener">Django</a> 的设计哲学来，你会觉得 Django 很好用，越用越顺手；相反，你如果不能融入或接受 Django 的设计哲学，你用 Django 一定会很痛苦，趁早放弃的好。所以说在有些人眼里 Django 无异于仙丹， 但对有一些人来说它又是毒药且剧毒。</p>
+<p>先说<a href="http://www.nowamagic.net/academy/tag/%E7%BC%BA%E7%82%B9" target="_blank" rel="noopener">缺点</a>：</p>
+<ul>
+<li>系统紧耦合，如果你觉得 Django 内置的某项功能不是很好，想用喜欢的第三方库来代替是很难的，比如下面将要说的 ORM、Template。要在 Django 里用 SQLAlchemy 或 Mako 几乎是不可能，即使打了一些补丁用上了也会让你觉得非常非常别扭。</li>
+<li>Django 自带的 ORM 远不如 SQLAlchemy 强大，除了在 Django 这一亩三分地，SQLAlchemy 是 Python 世界里事实上的 ORM 标准，其它框架都支持 SQLAlchemy 了，唯独 Django 仍然坚持自己的那一套。Django 的开发人员对 SQLAlchemy 的支持也是有过讨论和尝试的，不过最终还是放弃了，估计是代价太高且跟 Django 其它的模块很难合到一块。</li>
+<li>Template 功能比较弱，不能插入 Python 代码，要写复杂一点的逻辑需要另外用 Python 实现 Tag 或 Filter。</li>
+<li>让人纠结的 auth 模块，Django 的 auth 跟其它模块结合紧密，功能也挺强的，就是做的有点过了，用户的数据库 schema 都给你定好了，这样问题就来了，比如很多网站要求 email 地址唯一，可 schema 里这个字段的值不是唯一的，纠结是必须的了。</li>
+<li>核心开发团队似乎比较顽固，除了说第三方库难使用，据说历史上 ORM API 繁琐（后来按 ActiveRecord 风格重写），曾经对 ajax 热潮也不怎么当回事。</li>
+<li>周边资源不够发达，其实说来说去有些相关，这个是第三方库比较难融合相关的，没有很好的插件体系。虽然官方文档还不错，但是相关书籍很资料相比 rails 等并不多。</li>
+<li>早前有说没有结合测试框架，最新的 1.5 肯定是有了。不过个人判断又是反应迟钝的一个表现。不过个人也不喜欢测试太重，这点跟作者想法比较一致。</li>
+</ul>
+<p>再来看看一些优点：</p>
+<ul>
+<li>自助管理后台，admin interface 是Django 里比较吸引眼球的一项 contrib，让你几乎不用写一行代码就拥有一个完整的后台管理界面。</li>
+<li>虽然 Django 自带的 ORM 不如 SQLAlchemy 强大，但也不弱。一般来说可以不怎么使用 SQL 语句，每条记录都是一个对象，而取对象的关联，易如反掌。</li>
+<li>URL design，Django 的 url 模块设计得看似很复杂，都是使用正则表达式，但真正用到的都是很简单的正则，等你用到一定程度的时候，发现这块东西，做的很细致，地址的表达上，你可以随心所欲，那些优美的，简洁的，专业的地址，不管哪种，你都能表现出来。</li>
+<li>Django 的 App 理念很好。App 可插拔，是不可多得的思想。不需要了，可以直接删除，对系统影响不大。</li>
+<li>Django 的错误提示做的足够详细了，我有时喜欢上 Django 的出错页面了，那页面先不说有多详细，但光页面的美观上就是一种享受。有时，Django 的错误提示信息，让你马上就能知道在那个页面哪行代码出错了。</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://p1.bqimg.com/1949/a16c7d958e04fd81.jpg" alt="jayking WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="http://i1.piimg.com/1949/5a4f37f4aeab7f71.jpg" alt="jayking Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/django/" rel="tag"># django</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/12/installMysql/" rel="next" title="Mac 10.12安装 mysql">
+                <i class="fa fa-chevron-left"></i> Mac 10.12安装 mysql
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/03/djangocmd/" rel="prev" title="django命令汇总">
+                django命令汇总 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/04/02/djangofeature/"
+           data-title="django优缺点" data-url="http://5201314baby.com/2017/04/02/djangofeature/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="jayking" />
+          <p class="site-author-name" itemprop="name">jayking</p>
+           
+              <p class="site-description motion-element" itemprop="description">change it</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jayking</span>
+</div>
+
+
+<div class="powered-by">
+     由 <a class="theme-link" href="http://hexo.io" rel="external nofollow">Hexo</a> 强力驱动  
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"jaykingnote"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

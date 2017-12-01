@@ -1,0 +1,770 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="github," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="如果是单账户，很方便，默认拿id_rsa与你的 github服务器的公钥对比； 如果是多用户如user1,user2,那么就不能用在user2的身上了，怎么办呢？ 下面我将使用图文形式详细想大家介绍下多github用户配置ssh key； 新建user1、user2的SSH Key#新建user1 SSH key： $">
+<meta name="keywords" content="github">
+<meta property="og:type" content="article">
+<meta property="og:title" content="多个账号github SSH key切换">
+<meta property="og:url" content="http://5201314baby.com/2017/03/07/github2account/index.html">
+<meta property="og:site_name" content="jayking&#39;s blog">
+<meta property="og:description" content="如果是单账户，很方便，默认拿id_rsa与你的 github服务器的公钥对比； 如果是多用户如user1,user2,那么就不能用在user2的身上了，怎么办呢？ 下面我将使用图文形式详细想大家介绍下多github用户配置ssh key； 新建user1、user2的SSH Key#新建user1 SSH key： $ cd ~/.ssh      # 切换到C:\Users\Administra">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-12-01T07:06:45.136Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="多个账号github SSH key切换">
+<meta name="twitter:description" content="如果是单账户，很方便，默认拿id_rsa与你的 github服务器的公钥对比； 如果是多用户如user1,user2,那么就不能用在user2的身上了，怎么办呢？ 下面我将使用图文形式详细想大家介绍下多github用户配置ssh key； 新建user1、user2的SSH Key#新建user1 SSH key： $ cd ~/.ssh      # 切换到C:\Users\Administra">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://5201314baby.com/2017/03/07/github2account/"/>
+
+
+
+
+
+  <title> 多个账号github SSH key切换 | jayking's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">jayking's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Let's crazy</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://5201314baby.com/2017/03/07/github2account/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jayking">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jayking's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                多个账号github SSH key切换
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-07T20:15:32+08:00">
+                2017-03-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/03/07/github2account/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/07/github2account/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>如果是单账户，很方便，默认拿id_rsa与你的 github服务器的公钥对比；</p>
+<p>如果是多用户如user1,user2,那么就不能用在user2的身上了，怎么办呢？</p>
+<p>下面我将使用图文形式详细想大家介绍下多github用户配置ssh key；</p>
+<h2 id="新建user1、user2的SSH-Key"><a href="#新建user1、user2的SSH-Key" class="headerlink" title="新建user1、user2的SSH Key"></a><strong>新建user1、user2的SSH Key</strong></h2><p>#新建user1 SSH key：</p>
+<p>$ cd ~/.ssh     </p>
+<p># 切换到C:\Users\Administrator.ssh</p>
+<p>#ssh-keygen -t rsa -C “user1@email.com” </p>
+<p>一路回车即可；</p>
+<h1 id="新建user2的SSH-key"><a href="#新建user2的SSH-key" class="headerlink" title="新建user2的SSH key"></a>新建user2的SSH key</h1><p>#ssh-keygen -t rsa -C “user2@email.com”</p>
+<p># 设置名称为id_rsa_user2</p>
+<p>(/c/Users/Administrator/.ssh/id_rsa):<strong> /c/Users/Administrator/.ssh/id_rsa_user2</strong></p>
+<h2 id="密钥添加到SSH-agent中"><a href="#密钥添加到SSH-agent中" class="headerlink" title="密钥添加到SSH agent中"></a><strong>密钥添加到SSH agent中</strong></h2><p>因为默认只读取id_rsa，为了让SSH识别新的私钥，需将其添加到SSH agent中：</p>
+<p>ssh-add ~/.ssh/id_rsa_user2</p>
+<p>如果出现Could not open a connection to your authentication agent的错误，就试着用以下命令：</p>
+<p>ssh-agent bash </p>
+<p>ssh-add ~/.ssh/id_rsa_user2</p>
+<h2 id="修改config文件"><a href="#修改config文件" class="headerlink" title="修改config文件"></a><strong>修改config文件</strong></h2><p> 在~/.ssh目录下找到config文件，如果没有就创建：</p>
+<p>touch config     </p>
+<p>然后修改我的config配置如下：</p>
+<p>如果存在的话，其实就是往这个config中添加一个Host：</p>
+<p>#建一个github别名，新建的帐号使用这个别名做克隆和更新</p>
+<p>其规则就是：从上至下读取config的内容，在每个Host下寻找对应的私钥。这里将GitHub SSH仓库地址中的git@github.com替换成新建的Host别名如：github2，那么原地址 是：git@github.com:test/Mywork.git，替换后应该是：git@github2:test/Mywork.git</p>
+<p>打开新生成的~/.ssh/id_rsa_user2.pub文件，将里面的内容添加到GitHub后台。</p>
+<p>第一个github帐号下的SSH Key中也要记得添加。</p>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a><strong>测试</strong></h2><p>$ ssh -T git@github.com</p>
+<p>Hi chenlianjiang! You’ve successfully authenticated, but GitHub does not provide shell access.</p>
+<p> $ ssh -T git@github2 </p>
+<p>Hi 1047353200! You’ve successfully authenticated, but GitHub does not provide shell access.</p>
+<h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a><strong>应用</strong></h2><p>测试成功，尝试克隆1047353200账号下的远程仓库。如下：</p>
+<p>$ git clone git@github2:1047353200/git-demo.git</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://p1.bqimg.com/1949/a16c7d958e04fd81.jpg" alt="jayking WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="http://i1.piimg.com/1949/5a4f37f4aeab7f71.jpg" alt="jayking Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/github/" rel="tag"># github</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/04/createBlog/" rel="next" title="Hexo 建立自己的博客">
+                <i class="fa fa-chevron-left"></i> Hexo 建立自己的博客
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/12/pyinstaller/" rel="prev" title="python3 转成 linux 可执行文件">
+                python3 转成 linux 可执行文件 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/03/07/github2account/"
+           data-title="多个账号github SSH key切换" data-url="http://5201314baby.com/2017/03/07/github2account/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="jayking" />
+          <p class="site-author-name" itemprop="name">jayking</p>
+           
+              <p class="site-description motion-element" itemprop="description">change it</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#新建user1、user2的SSH-Key"><span class="nav-number">1.</span> <span class="nav-text">新建user1、user2的SSH Key</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#新建user2的SSH-key"><span class="nav-number"></span> <span class="nav-text">新建user2的SSH key</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#密钥添加到SSH-agent中"><span class="nav-number">1.</span> <span class="nav-text">密钥添加到SSH agent中</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改config文件"><span class="nav-number">2.</span> <span class="nav-text">修改config文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试"><span class="nav-number">3.</span> <span class="nav-text">测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#应用"><span class="nav-number">4.</span> <span class="nav-text">应用</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jayking</span>
+</div>
+
+
+<div class="powered-by">
+     由 <a class="theme-link" href="http://hexo.io" rel="external nofollow">Hexo</a> 强力驱动  
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"jaykingnote"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
